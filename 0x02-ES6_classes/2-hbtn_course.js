@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-underscore-dangle */
+
 export default class HolbertonCourse {
   constructor(name, length, students) {
     this.name = name;
@@ -21,11 +22,12 @@ export default class HolbertonCourse {
     }
   }
 
-  // length
+  // Get length
   get length() {
     return this._length;
   }
 
+  // Set length
   set length(length) {
     if (typeof length === 'number') {
       this._length = length;
@@ -34,16 +36,18 @@ export default class HolbertonCourse {
     }
   }
 
-  // students
+  // Get students
   get students() {
     return this._students;
   }
 
+  // Set students
   set students(students) {
     if (Array.isArray(students) && students.every((s) => typeof s === 'string')) {
-      this._students - students;
+      this._students = students;  // Corrected assignment here
     } else {
       throw new TypeError('Students must be an array of strings');
     }
   }
 }
+
