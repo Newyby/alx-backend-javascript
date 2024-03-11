@@ -1,14 +1,27 @@
-export default function updateStudentGradeByCity(data, city, newGrades) {
-  const sanFstudents = data.filter((x) => x.location === city);
-  const newData = sanFstudents.map((x) => {
-    const studentId = newGrades.find((entry) => entry.studentId === x.id);
-    if (studentId) {
-      return {
-        ...x,
-        grade: studentId.grade,
-      };
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-param-reassign */
+
+export default function updateStudentGradeByCity(studArray, city, newGrades) {
+  if (!Array.isArray(studArray)) {
+    throw new TypeError(`${studArray} is not a valid student array`);
+  }
+  if (typeof city !== 'string') {
+    throw new TypeError(`${city} is not a valid city name`);
+  }
+  if (!Array.isArray(newGrades)) {
+    throw new TypeError(`${newGrades} is not a valid grades array`);
+  }
+
+  const cityStuds = studArray.filter((student) => student.location === city);
+  return cityStuds.map((student) => {
+    for (const gradesData of newGrades) {
+      if (!student.hasOwnProperty('grade')) {
+        student.grade = 'N/A';
+      }
+      if (gradesData.studentId === student.id) {
+        student.grade = gradesData.grade;
+      }
     }
-    return { ...x, grade: 'N/A' };
+    return student;
   });
-  return newData;
 }
